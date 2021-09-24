@@ -412,8 +412,11 @@
 
 		<!-- —————————————————————————————————数据库————————————————————————————————————— -->
 		<!--1、mysql数据库驱动 -->
-		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId>
-			<version>5.1.38</version> </dependency> -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.39</version>
+		</dependency>
 		<!--2、sqlserver数据库驱动 -->
 		<!--
 			问题：pom.xml会提示：Missing artifact com.microsoft.sqlserver:sqljdbc4:jar:4.0
@@ -813,7 +816,11 @@
 			<artifactId>xmlbeans</artifactId>
 			<version>5.0.1</version>
 		</dependency>
-		<!-- ——————————————————————————————未知jar END——————————————————————————————————— -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <!-- ——————————————————————————————未知jar END——————————————————————————————————— -->
 	</dependencies>
 
 	<build>
