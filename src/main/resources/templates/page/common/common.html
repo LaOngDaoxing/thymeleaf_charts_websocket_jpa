@@ -1,0 +1,16 @@
+<!-- 头部加入thymeleaf命名空间 th标签引入 -->
+<html xmlns:th="http://www.thymeleaf.org">
+<!--
+th:inline="javascript"这是Thymeleaf中的内联写法，支持在javascript访问model中的数据。
+其中的第9、14行 为基于XML的转义写法；
+第11行把内联访问的语句[[@{/}]]用注释引起来，且后面跟着一个空格"/thymeleaf_charts_websocket_jpa/"，是指若不存在此对象，则自动设置默认值为"/thymeleaf_charts_websocket_jpa/"。
+-->
+<script type="text/javascript" th:inline="javascript" th:fragment="scriptCommon">
+    //1、全局变量值/thymeleaf_charts_websocket_jpa/
+    /*<![CDATA[*/
+    var G = {
+        contextPath1:/*[[@{/}]]*/ "/thymeleaf_charts_websocket_jpa/"
+    };
+    console.log(G.contextPath1);
+    /*]]>*/
+</script>

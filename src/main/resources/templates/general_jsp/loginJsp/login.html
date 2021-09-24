@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 头部加入thymeleaf命名空间 th标签引入 -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+<!--
+http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
+-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+    <div >
+       <form id="loginFormId" onkeydown='if(event.keyCode==13){checkUser();return false;}'
+             check="login?checkuser_noAuth" action="login?login_noAuth" method="post" role="form">
+           <label>用户名：</label><input type="text" id="userName" name="userName"  placeholder="请输入用户名"/>
+           <label>密码：</label><input type="text" id="password" name="password"  placeholder="请输入密码"/>
+           <button type="button" onclick="checkUser()">
+               <span class="bigger-110">登录</span>
+           </button>
+       </form>
+    </div>
+
+    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/echarts.min.js}"></script>
+    <!--引用templates/page/common/common.html中的通用标签scriptCommon-->
+    <script type="text/javascript" th:replace="page/common/common :: scriptCommon"/>
+    <script type="text/javascript">
+        var login={};
+
+        $(function () {
+
+        });
+        $(document).keydown(function (e) {
+            if (e.keyCode == 13) {
+                // 验证用户信息
+                checkUser();
+            }
+        });
+        // 验证用户信息
+        function checkUser() {
+            // 如果表单输入的数据格式，校验失败，则返回false
+            if (!validForm()) {
+                return false;
+            }
+            // 如果表单输入的数据格式，校验成功，则跳转首页
+            newLogin();
+        }
+        // 验证表单输入的数据格式
+        function validForm() {
+            if ($.trim($("#userName").val()).length == 0) {
+                showErrorMsg("请输入用户名");
+                return false;
+            }
+
+            if ($.trim($("#password").val()).length == 0) {
+                showErrorMsg("请输入密码");
+                return false;
+            }
+            return true;
+        }
+        function newLogin(){
+            // 获取表单的，验证路径
+            var checkurl = $('form').attr('check');
+            // 获取表单的，提交并跳转首页路径
+            var actionurl = $('form').attr('action');
+
+        }
+    </script>
+</body>
+</html>

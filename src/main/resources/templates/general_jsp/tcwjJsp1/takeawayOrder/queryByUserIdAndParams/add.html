@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 头部加入thymeleaf命名空间 th标签引入 -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>外卖订单增加-前台html页面使用thymeleaf框架</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body class="container" style="width: 60%">
+<div class="form-group"></br>
+    <h5>新增外卖订单</h5>
+    <hr>
+</div>
+<input id="emailParam" name="emailParam"  th:value="${param1}" type="hidden"/>
+<div class="form-group">
+    <label for="groupCode">分组编码<span style="color: red">*</span>&nbsp;</label>
+    <input id="groupCode" value="dkh" readonly="readonly" class="form-control" required placeholder="默认dkh"/></br>
+</div>
+<div class="form-group">
+    <label for="userId">用户id<span style="color: red">*</span>&nbsp;</label>
+    <input id="userId" value="54fdea80-f6a5-11eb-9810-f44d300627e6" readonly="readonly" class="form-control" required placeholder="session中存储的，当前登录userId"/></br>
+</div>
+<div class="form-group">
+    <label>平台名称<span style="color: red">*</span>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+    <p></p>
+    <label class="radio-inline">
+        <input type="radio" name="platformId" value="01"> 饿了么
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="platformId" value="02"> 口碑
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="platformId" value="03"> 美团
+    </label>
+</div>
+<div class="form-group">
+    <label for="email">邮箱&nbsp;</label>
+    <input id="email" value="" class="form-control"/></br>
+</div>
+<div class="form-group">
+    <button id="save" class="btn btn-success">保存</button>
+    <button id="clear" class="btn btn-danger">重置</button>
+</div>
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<!--引用templates/page/common/common.html中的通用标签scriptCommon-->
+<script type="text/javascript" th:replace="page/common/common :: scriptCommon"/>
+<script type="text/javascript">
+    $(function () {
+        //刷新页面
+        $('#clear').click(function () {
+            location.reload();
+        });
+        $('#save').click(function () {
+            var param1=$("#param1").val();
+            var groupCode = $('#groupCode').val();
+            var userId = $('#userId').val();
+            var platformId = $("input[name='platformId']:checked").val();
+            console.log("控制台打印_"+platformId+"_");
+            var email = $('#email').val();
+            if ('' == userId) {
+                alert("用户id不能为空");
+                return;
+            }
+            if ('' == platformId) {
+                alert("平台名称不能为空");
+                return;
+            }
+            $.post(G.contextPath1+'takeawayOrder1/addAndQueryByParams', {param1:param1,groupCode:groupCode,userId: userId,userId: userId, platformId: platformId,  email: email}, function (data) {
+                console.log(data);
+                alert('新增成功！观察统计图实时变化');
+            });
+        });
+    });
+</script>
+</body>
+</html>
