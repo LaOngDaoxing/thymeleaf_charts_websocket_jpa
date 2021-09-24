@@ -1,0 +1,2 @@
+# thymeleaf_charts_websocket_jpa
+websocket+线程轮询：后台使用线程定时查询数据库变动数据，若有变动将用websocket实时推送消息到前台页面显示
