@@ -11,7 +11,7 @@ websocket+线程轮询：后台使用线程定时查询数据库变动数据，�
 ## 2、配置
 ### （1）环境
 &emsp;jdk1.8
-<br/>&emsp;tomcat85_8089
+<br/>&emsp;tomcat85_8090
 ### （2）导入jar包
 &emsp;项目 右键》Maven》Update Project...（Alt+F5）
 ### （3）配置文件application.properties
@@ -31,13 +31,13 @@ websocket+线程轮询：后台使用线程定时查询数据库变动数据，�
 <br/>&emsp;root
 <br/>&emsp;123456
 ## 3、部署位置：
-&emsp;/opt/developsoft/servers/tomcat/tomcat85_8089
+&emsp;/opt/developsoft/servers/tomcat/tomcat85_8090
 ## 4、部署注意：
 	（1）ps -ef | grep thymeleaf_charts_websocket_jpa.jar查出进程号，kill -9 进程号；
 	（2）替换jar；
 	（3）./startup.sh 启动
 ## 5、启动后浏览器默认访问地址
-&emsp;http://192.168.21.120:8089/thymeleaf_charts_websocket_jpa
+&emsp;http://192.168.21.120:8090/thymeleaf_charts_websocket_jpa
 # 四、jenkins自动部署
 ## 1、浏览器地址
 &emsp;http://
