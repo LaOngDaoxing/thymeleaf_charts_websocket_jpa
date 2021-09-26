@@ -121,20 +121,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
 		<!-- ———————————————————————————————Spring Boot END—————————————————————————————————— -->
 
 		<!-- ———————————————————————————————servlet——————————————————————————————————
 			servlet包只是编译时需要，而发布时不需要，避免与tomcat中的servlet包发生冲突,解决jsp页面使用el表达式错误
 			<scope>provide</scope>
 		-->
-		<!-- 引入Servlet -->
+		<!-- 添加servlet依赖 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- 引入jstl-1.2.jar
+		<!-- 添加 JSTL（JSP Standard Tag Library，JSP标准标签库)，jstl-1.2.jar
 			（1）jar包所在仓库下载地址》https://mvnrepository.com/artifact/javax.servlet/jstl
 		   	（2）应用步骤
 		   		JSTL使用需引入两个jar包:jstl与taglibs
@@ -145,7 +149,7 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<!--引入jsp相关 -->
+		<!-- 添加jsp依赖 -->
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
@@ -190,8 +194,9 @@
 			<artifactId>commons-dbutils</artifactId>
 			<version>1.6</version>
 		</dependency>
-		<!-- 文件上传:为Web应用程序或Servlet提供文件上传功能，Struts2和SpringMVC的文件上传组件。 依赖包：Commons
-			IO -->
+		<!-- 配合servlet-api实现文件上传功能
+			文件上传:为Web应用程序或Servlet提供文件上传功能，Struts2和SpringMVC的文件上传组件。 依赖包：Commons IO
+		 -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -308,7 +313,7 @@
 		</dependency>
 
 		<!--Jackson数据绑定 -->
-		<!-- 对象序列化支持 -->
+		<!-- json解析工具：对象序列化支持 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -372,6 +377,12 @@
 			<artifactId>mybatis</artifactId>
 			<version>${mybatis.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-ehcache</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<!-- mybatis-spring整合包 -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
@@ -609,6 +620,7 @@
 			<artifactId>cglib</artifactId>
 			<version>3.3.0</version>
 		</dependency>
+		<!-- 数据库连接池c3p0 -->
 		<dependency>
 			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
@@ -624,6 +636,7 @@
 			<artifactId>com.springsource.org.aopalliance</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		<!-- Aop织入器 -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>com.springsource.org.aspectj.weaver</artifactId>
@@ -644,6 +657,11 @@
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
 			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>fontbox</artifactId>
+			<version>2.0.24</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.ezmorph</groupId>
@@ -717,6 +735,7 @@
 			<version>0.4</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- 注意：首先安装Lombok插件才可以用 -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -815,11 +834,7 @@
 			<artifactId>xmlbeans</artifactId>
 			<version>5.0.1</version>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-        <!-- ——————————————————————————————未知jar END——————————————————————————————————— -->
+		<!-- ——————————————————————————————未知jar END——————————————————————————————————— -->
 	</dependencies>
 
 	<build>
