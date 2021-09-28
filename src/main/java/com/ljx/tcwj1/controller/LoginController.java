@@ -30,7 +30,10 @@ import java.util.Map;
 public class LoginController {
     /**
      * Title: checkuser
-     * Description: 检查用户名称
+     * Description:  校验|验证|检查 登录的用户信息
+     * @CodeSteps：  根据 登录的用户信息，与数据库表的用户信息是否一致；
+                     若不一致，则返回提示信息“201”；
+                     若一致，则返回提示信息“200”，并将用户信息存储到session中；
      * @Param user:
      * @Param request:
      * @return: java.lang.String
@@ -49,20 +52,10 @@ public class LoginController {
         }
         // 用户数据不为空（即存在此用户）、用户状态为已启用，则保存用户登录信息到session中，并提示“用户校验成功”。
         if(oneUser != null){
-            // 存用户登录信息到session中
-            saveLoginSuccessInfo(request,user);
+            // 保存当前登录的用户信息到session中
+            SessionUtil.ifCheckUserSuccessThenSaveIntoSession(request,user);
             backMap.put("rstCode",200);
         }
         return backMap;
-    }
-    /**
-     * 保存用户登录的信息，并将当前登录用户的组织机构赋值到用户实体中；
-     *
-     * @param req   request
-     * @param user  当前登录用户
-     */
-    private void saveLoginSuccessInfo(HttpServletRequest req, UserDO user) {
-        HttpSession session = SessionUtil.getSession();
-        session.setAttribute(ConstantUtil.LOCAL_CLINET_USER, user);
     }
 }
