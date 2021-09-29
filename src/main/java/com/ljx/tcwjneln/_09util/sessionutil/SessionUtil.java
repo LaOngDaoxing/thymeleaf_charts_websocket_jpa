@@ -7,6 +7,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * @author ljx
@@ -56,5 +57,13 @@ public class SessionUtil {
     public static void ifCheckUserSuccessThenSaveIntoSession(HttpServletRequest req, UserDO user) {
         HttpSession session = SessionUtil.getSession();
         session.setAttribute(ConstantUtil.LOCAL_CLINET_USER, user);
+        // 在线用户的管理中，当前session为空 或者 当前session的用户信息与刚输入的用户信息一致时，则更新Client信息
+        if (1==1) {
+
+        }
+        // 如果不一致，则注销session并通过session=req.getSession(true)初始化session
+        else {
+
+        }
     }
 }
