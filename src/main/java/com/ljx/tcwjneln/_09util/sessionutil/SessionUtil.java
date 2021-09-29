@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
  * @FR功能需求：
  * @ImportJar:
  * @ApiGrammer规则：
+        ehcache是一个缓存服务，它将数据存在内存当中，即使你的tomcat等服务器容器停止了，数据依然在内存；
+        session是由服务器容器管理的，当服务器容器停止以后，session数据也没了；
+        还有就是创建session的时候会向客户端写入一个cookies。
  * @Remark:
  * @AlibabaCodeStatuteScanError：
  * @CodeBug解决:
