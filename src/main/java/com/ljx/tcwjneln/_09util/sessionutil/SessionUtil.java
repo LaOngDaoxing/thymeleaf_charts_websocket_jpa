@@ -63,7 +63,12 @@ public class SessionUtil {
         }
         // 如果不一致，则注销session并通过session=req.getSession(true)初始化session
         else {
-
+            session.invalidate();
+            //session初始化
+            session = req.getSession(true);
+            session.setAttribute(ConstantUtil.LOCAL_CLINET_USER, user);
+            //保存验证码
+            session.setAttribute("randCode", req.getParameter("randCode"));
         }
     }
 }
