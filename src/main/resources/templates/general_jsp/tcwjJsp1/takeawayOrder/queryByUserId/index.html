@@ -159,6 +159,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
             console.log("后台数据已更新...");
             // 拿到后台返回数据event.data，字符串 ——>转 JavaScript对象
             var jsonObject = JSON.parse(event.data);
+            console.log(jsonObject);
             // 渲染数据到图表
             tcwjJsp1ById.index.renderDataToEchart(tcwjJsp1ById.index.option,tcwjJsp1ById.index.myChart,jsonObject);
         };

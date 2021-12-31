@@ -126,9 +126,9 @@ public class TakeawayOrderController {
         params.put("userId",userId);
         params.put("param1",param1);
         // 拼装的用户数据（根据用户id、前台页面条件，列表查询用户表）
-        TakeawayOrderChartDTO TakeawayOrderChartDTO = takeawayOrderService.dealTakeawayOrderChartDTOByParams(params);
+        TakeawayOrderChartDTO takeawayOrderChartDTO = takeawayOrderService.dealTakeawayOrderChartDTOByParams(params);
         // 通知前端，向前台发送消息
-        WebSocketSendUtil.sendMessageToWebsocketJs(takeawayOrderDO.getUserId(), JSON.toJSONString(TakeawayOrderChartDTO));
+        WebSocketSendUtil.sendMessageToWebsocketJs(takeawayOrderDO.getUserId(), JSON.toJSONString(takeawayOrderChartDTO));
         return result;
     }
     /*######################## 一、根据用户id，接收 消息(用户信息)的 websocket服务端 ########################*/

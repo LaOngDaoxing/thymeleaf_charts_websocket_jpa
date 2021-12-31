@@ -34,8 +34,8 @@
     </label>
 </div>
 <div class="form-group">
-    <label for="email">邮箱&nbsp;</label>
-    <input id="email" value="" class="form-control"/></br>
+    <label for="goodsName">商品名称&nbsp;</label>
+    <input id="goodsName" value="" class="form-control"/></br>
 </div>
 <div class="form-group">
     <button id="save" class="btn btn-success">保存</button>
@@ -55,7 +55,7 @@
             var userId = $('#userId').val();
             var platformId = $("input[name='platformId']:checked").val();
             console.log("控制台打印_"+platformId+"_");
-            var email = $('#email').val();
+            var goodsName = $('#goodsName').val();
             if ('' == userId) {
                 alert("用户id不能为空");
                 return;
@@ -64,7 +64,7 @@
                 alert("平台名称不能为空");
                 return;
             }
-            $.post(G.httpContextPath+'takeawayOrder1/addAndQueryByUserId', {groupCode:groupCode,userId: userId,userId: userId, platformId: platformId,  email: email}, function (data) {
+            $.post(G.httpContextPath+'takeawayOrder1/addAndQueryByUserId', {groupCode:groupCode,userId: userId,userId: userId, platformId: platformId,  goodsName: goodsName}, function (data) {
                 console.log(data);
                 alert('新增成功！观察统计图实时变化');
             });
