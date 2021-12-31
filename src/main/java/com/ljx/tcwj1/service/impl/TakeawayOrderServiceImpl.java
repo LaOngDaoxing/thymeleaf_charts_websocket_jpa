@@ -47,25 +47,25 @@ public class TakeawayOrderServiceImpl implements TakeawayOrderService {
     }
     @Override
     public TakeawayOrderChartDTO dealTakeawayOrderChartDTOByUserId(String userId) {
-        TakeawayOrderChartDTO TakeawayOrderChartDTO = new TakeawayOrderChartDTO();
+        TakeawayOrderChartDTO takeawayOrderChartDTO = new TakeawayOrderChartDTO();
         List<Map<String, Object>> mapList = selectSexNumListByUserId(userId);
         if (null != mapList && mapList.size() > 0) {
             mapList.forEach((Map<String, Object> map) -> {
                 int switchI=Integer.valueOf(map.get("platformId").toString()) ;
                 switch (switchI) {
                     case 1:
-                        TakeawayOrderChartDTO.seteLeMa((long) map.get("platformIdNum"));
+                        takeawayOrderChartDTO.seteLeMe((long) map.get("platformIdNum"));
                         break;
                     case 2:
-                        TakeawayOrderChartDTO.setKouBei((long) map.get("platformIdNum"));
+                        takeawayOrderChartDTO.setKouBei((long) map.get("platformIdNum"));
                         break;
                     default:
-                        TakeawayOrderChartDTO.setMeiTuan((long) map.get("platformIdNum"));
+                        takeawayOrderChartDTO.setMeiTuan((long) map.get("platformIdNum"));
                         break;
                 }
             });
         }
-        return TakeawayOrderChartDTO;
+        return takeawayOrderChartDTO;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class TakeawayOrderServiceImpl implements TakeawayOrderService {
                 int switchI=Integer.valueOf(map.get("platformId").toString()) ;
                 switch (switchI) {
                     case 1:
-                        TakeawayOrderChartDTO.seteLeMa(((BigInteger)map.get("platformIdNum")).longValue());
+                        TakeawayOrderChartDTO.seteLeMe(((BigInteger)map.get("platformIdNum")).longValue());
                         break;
                     case 2:
                         TakeawayOrderChartDTO.setKouBei(((BigInteger)map.get("platformIdNum")).longValue());

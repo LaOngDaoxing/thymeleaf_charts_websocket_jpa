@@ -48,8 +48,10 @@ public class TakeawayOrderController {
      * Date: 2021/3/25 0025 下午 4:32
      */
     @GetMapping("/takeawayOrder1/{userId}/queryByUserId")
+    @ResponseBody
     public TakeawayOrderChartDTO selectTakeawayOrderChartDTOByUserId(@PathVariable String userId) {
-        return takeawayOrderService.dealTakeawayOrderChartDTOByUserId(userId);
+        TakeawayOrderChartDTO takeawayOrderChartDTO =takeawayOrderService.dealTakeawayOrderChartDTOByUserId(userId);
+        return takeawayOrderChartDTO;
     }
     /**
      * webUrll测试http://localhost:8090/addAndQueryByUserId
@@ -61,6 +63,7 @@ public class TakeawayOrderController {
      * Date: 2021/3/24 0024 上午 10:14
      */
     @PostMapping("/takeawayOrder1/addAndQueryByUserId")
+    @ResponseBody
     public TakeawayOrderDO addAndQueryByUserId(TakeawayOrderDO takeawayOrderDO) {
         // 生成一个32位的随机字符串：36位UUID，去掉“-”
         takeawayOrderDO.setTakeawayOrderId(_02Init_Str_JsonStr.initUuidLen32());
@@ -82,6 +85,7 @@ public class TakeawayOrderController {
      * Date: 2021/3/25 0025 下午 5:34
      */
     @GetMapping("/takeawayOrder1/{userId}/queryByParams")
+    @ResponseBody
     public TakeawayOrderChartDTO selectTakeawayOrderChartDTOByParams(@PathVariable String userId,@RequestParam Map<String,Object> params) {
         params.put("userId",userId);
         return takeawayOrderService.dealTakeawayOrderChartDTOByParams(params);
@@ -97,6 +101,7 @@ public class TakeawayOrderController {
      * Date: 2021/3/24 0024 上午 10:14
      */
     @PostMapping("/takeawayOrder1/addAndQueryByParams")
+    @ResponseBody
     public TakeawayOrderDO addAndQueryByParams(TakeawayOrderDO takeawayOrderDO) {
         // 生成一个32位的随机字符串：36位UUID，去掉“-”
         takeawayOrderDO.setTakeawayOrderId(_02Init_Str_JsonStr.initUuidLen32());

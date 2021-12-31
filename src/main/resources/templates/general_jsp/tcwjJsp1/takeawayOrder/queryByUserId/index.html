@@ -108,7 +108,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
             var tip = '确认断开实时图表显示吗？如果想重新实时监控，请刷新页面。';
             if (confirm(tip)) {
                 // 主动断开连接
-                ws.close();
+                tcwjJsp1.index.ws.close();
                 $(this).attr('disabled','disabled');
                 $(this).attr('class','btn-default');
             }
@@ -125,6 +125,8 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
         $.get(getUrl, function (data) {
             // 拿到数据
             var jsonObject =data;
+
+            console.log("1、"+jsonObject.eLeMe);
             // 渲染数据到图表
             tcwjJsp1.index.renderDataToEchart(tcwjJsp1.index.option,tcwjJsp1.index.myChart,jsonObject);
         });
@@ -147,6 +149,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
             console.log("建立连接...");
             param1=1;
             var messageObj={provinceMsg:"河北省",cityMsg:"石家庄市",emailMsg:param1};
+            //  JavaScript对象 ——>转 字符串
             var message=JSON.stringify(messageObj);
             // 客户端ws.send发送的消息（或心跳信息）message：可以是字符串、二进制数据
             ws.send(toWebsocketOfClientType+"_"+message);
@@ -156,6 +159,8 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
             console.log("后台数据已更新...");
             // 拿到数据
             var jsonObject = JSON.parse(event.data);
+
+            console.log("2、"+jsonObject.eLeMe);
             // 渲染数据到图表
             tcwjJsp1.index.renderDataToEchart(tcwjJsp1.index.option,tcwjJsp1.index.myChart,jsonObject);
         };
