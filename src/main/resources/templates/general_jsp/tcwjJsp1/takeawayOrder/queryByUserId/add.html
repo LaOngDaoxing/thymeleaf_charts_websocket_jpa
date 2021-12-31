@@ -64,7 +64,7 @@
                 alert("平台名称不能为空");
                 return;
             }
-            $.post(G.contextPath1+'takeawayOrder1/addAndQueryByUserId', {groupCode:groupCode,userId: userId,userId: userId, platformId: platformId,  email: email}, function (data) {
+            $.post(G.httpContextPath+'takeawayOrder1/addAndQueryByUserId', {groupCode:groupCode,userId: userId,userId: userId, platformId: platformId,  email: email}, function (data) {
                 console.log(data);
                 alert('新增成功！观察统计图实时变化');
             });

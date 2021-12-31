@@ -89,7 +89,8 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
             }
         ]
     };
-    tcwjJsp1.index.wsUrlPrefix = 'ws://192.168.21.21:8090'+G.contextPath1+'takeawayOrderWs1';
+    tcwjJsp1.index.httpContextPathAndCon = G.httpContextPath+'/takeawayOrder1';
+    tcwjJsp1.index.wsContextPathAndCon = G.wsContextPath+'/takeawayOrderWs1';
     tcwjJsp1.index.ws = null;
     tcwjJsp1.index.groupCode=null;
     tcwjJsp1.index.userId=null;
@@ -102,7 +103,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
         // 先ajax_后台根据用户id，获取用户信息；并在页面图表中第一次初始化显示此数据；
         tcwjJsp1.index.firstInitChartData(tcwjJsp1.index.userId);
         // 然后打开长连接实时监听
-        tcwjJsp1.index.websocketRtc(tcwjJsp1.index.ws,tcwjJsp1.index.wsUrlPrefix,tcwjJsp1.index.groupCode,tcwjJsp1.index.userId,tcwjJsp1.index.toWebsocketOfClientType);
+        tcwjJsp1.index.websocketRtc(tcwjJsp1.index.wsContextPathAndCon,tcwjJsp1.index.ws,tcwjJsp1.index.groupCode,tcwjJsp1.index.userId,tcwjJsp1.index.toWebsocketOfClientType);
         // 点击按钮，手动断开连接
         $('#stopMsg').click(function () {
             var tip = '确认断开实时图表显示吗？如果想重新实时监控，请刷新页面。';
@@ -121,27 +122,25 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
     tcwjJsp1.index.firstInitChartData=function(userId){
         var param1="paramVal123ss";
         // 根据用户id，列表查询用户表
-        var getUrl=G.contextPath1+"takeawayOrder1/"+userId+"/queryByUserId"+"?param1="+param1;
+        var getUrl=tcwjJsp1.index.httpContextPathAndCon+"/"+userId+"/queryByUserId"+"?param1="+param1;
         $.get(getUrl, function (data) {
             // 拿到数据
             var jsonObject =data;
-
-            console.log("1、"+jsonObject.eLeMe);
             // 渲染数据到图表
             tcwjJsp1.index.renderDataToEchart(tcwjJsp1.index.option,tcwjJsp1.index.myChart,jsonObject);
         });
     }
     /**
      * @Description：然后打开长连接实时监听
+     * @param wsContextPathAndCon
      * @param ws
-     * @param wsUrlPrefix
      * @param groupCode
      * @param userId
      * @param toWebsocketOfClientType
      */
-    tcwjJsp1.index.websocketRtc=function(ws,wsUrlPrefix,groupCode,userId,toWebsocketOfClientType){
+    tcwjJsp1.index.websocketRtc=function(wsContextPathAndCon,ws,groupCode,userId,toWebsocketOfClientType){
         var param1="paramVal123ss";
-        var wsUrl = wsUrlPrefix +"/"+groupCode+"/"+ userId+"?param1="+param1;
+        var wsUrl = wsContextPathAndCon +"/"+groupCode+"/"+ userId+"?param1="+param1;
         // 创建对象
         ws = new WebSocket(wsUrl);
         // 监听 握手成功/建立连接
@@ -157,10 +156,8 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
         // 前端接收消息/监听后端的消息推送
         ws.onmessage = function (event) {
             console.log("后台数据已更新...");
-            // 拿到数据
+            // 字符串 ——>转 JavaScript对象
             var jsonObject = JSON.parse(event.data);
-
-            console.log("2、"+jsonObject.eLeMe);
             // 渲染数据到图表
             tcwjJsp1.index.renderDataToEchart(tcwjJsp1.index.option,tcwjJsp1.index.myChart,jsonObject);
         };

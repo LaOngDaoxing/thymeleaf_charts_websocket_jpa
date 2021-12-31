@@ -89,7 +89,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
             }
         ]
     };
-    var wsUrlPrefix = 'ws://192.168.21.21:8090'+G.contextPath1+'takeawayOrderWs1';
+    var wsUrlPrefix = 'ws://192.168.21.21:8090'+G.httpContextPath+'takeawayOrderWs1';
     var ws = null;
     var groupCode=null;
     var userId=null;
@@ -121,7 +121,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
         var sexParam=$("#sexParam").val();
         var param1=$("#param1").val();
         // 根据用户id、前台页面条件，列表查询用户表
-        var getUrl=G.contextPath1+"takeawayOrder1/"+userId+"/queryByParams"+"?param1="+param1;
+        var getUrl=G.httpContextPath+"takeawayOrder1/"+userId+"/queryByParams"+"?param1="+param1;
         $.get(getUrl, function (data) {
             // 拿到数据
             var jsonObject =data;
@@ -184,7 +184,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
     function toByUserIdAndParamsAddUpdateParams(){
         var param1=$("#param1").val();
         let domEl=document.getElementById('toByUserIdAndParamsAddBtnId');
-        domEl.href=G.contextPath1+"index1/toByUserIdAndParamsAdd"+"?param1="+param1;
+        domEl.href=G.httpContextPath+"index1/toByUserIdAndParamsAdd"+"?param1="+param1;
     }
 </script>
 </body>
