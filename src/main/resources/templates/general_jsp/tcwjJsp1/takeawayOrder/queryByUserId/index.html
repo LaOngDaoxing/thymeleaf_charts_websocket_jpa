@@ -124,7 +124,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
         // 根据用户id，列表查询用户表
         var getUrl=tcwjJsp1.index.httpContextPathAndCon+"/"+userId+"/queryByUserId"+"?param1="+param1;
         $.get(getUrl, function (data) {
-            // 拿到数据
+            // 拿到后台返回数据data
             var jsonObject =data;
             // 渲染数据到图表
             tcwjJsp1.index.renderDataToEchart(tcwjJsp1.index.option,tcwjJsp1.index.myChart,jsonObject);
@@ -156,7 +156,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
         // 前端接收消息/监听后端的消息推送
         ws.onmessage = function (event) {
             console.log("后台数据已更新...");
-            // 字符串 ——>转 JavaScript对象
+            // 拿到后台返回数据event.data，字符串 ——>转 JavaScript对象
             var jsonObject = JSON.parse(event.data);
             // 渲染数据到图表
             tcwjJsp1.index.renderDataToEchart(tcwjJsp1.index.option,tcwjJsp1.index.myChart,jsonObject);
