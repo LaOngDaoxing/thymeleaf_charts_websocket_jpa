@@ -26,6 +26,19 @@ import java.util.Map;
  * @FR功能需求：
  * @ImportJar:
  * @ApiGrammer规则：
+    由于websocket服务端接口和普通后台接口写在同一个Controller中；注意以下对应的前台请求路径写法有区别，具体区别自行调试
+    接口路径写法1、
+         @RestController("/takeawayOrder1")
+         public class TakeawayOrderController{
+             @GetMapping("/{userId}/queryByUserId")
+             @ResponseBody
+         }
+    接口路径写法2、
+         @RestController()
+         public class TakeawayOrderController{
+             @GetMapping("/takeawayOrder1/{userId}/queryByUserId")
+             @ResponseBody
+         }
  * @Remark:
  * @AlibabaCodeStatuteScanError：
  * @CodeBug解决:
