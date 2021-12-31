@@ -54,7 +54,7 @@ public class TakeawayOrderServiceImpl implements TakeawayOrderService {
                 int switchI=Integer.valueOf(map.get("platformId").toString()) ;
                 switch (switchI) {
                     case 1:
-                        takeawayOrderChartDTO.seteLeMe((long) map.get("platformIdNum"));
+                        takeawayOrderChartDTO.setEleMe((long) map.get("platformIdNum"));
                         break;
                     case 2:
                         takeawayOrderChartDTO.setKouBei((long) map.get("platformIdNum"));
@@ -84,7 +84,7 @@ public class TakeawayOrderServiceImpl implements TakeawayOrderService {
                 int switchI=Integer.valueOf(map.get("platformId").toString()) ;
                 switch (switchI) {
                     case 1:
-                        TakeawayOrderChartDTO.seteLeMe(((BigInteger)map.get("platformIdNum")).longValue());
+                        TakeawayOrderChartDTO.setEleMe(((BigInteger)map.get("platformIdNum")).longValue());
                         break;
                     case 2:
                         TakeawayOrderChartDTO.setKouBei(((BigInteger)map.get("platformIdNum")).longValue());

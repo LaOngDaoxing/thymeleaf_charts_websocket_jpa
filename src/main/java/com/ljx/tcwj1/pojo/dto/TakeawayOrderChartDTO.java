@@ -13,20 +13,20 @@ package com.ljx.tcwj1.pojo.dto;
  * @date 2021/8/12 0012 上午 10:16
  */
 public class TakeawayOrderChartDTO {
-    private Long eLeMe;
+    private Long eleMe;
     private Long kouBei;
     private Long meiTuan;
+
     /**
      * 右键》Generate》Getter and Setter...》
      */
-    public Long geteLeMe() {
-        return eLeMe;
+    public Long getEleMe() {
+        return eleMe;
     }
 
-    public void seteLeMe(Long eLeMe) {
-        this.eLeMe = eLeMe;
+    public void setEleMe(Long eleMe) {
+        this.eleMe = eleMe;
     }
-
     public Long getKouBei() {
         return kouBei;
     }
@@ -54,8 +54,8 @@ public class TakeawayOrderChartDTO {
     /**
      * 使用字段，生成带参数的 构造函数：右键》Generate》Constructor》字段全选》点击OK 》
      */
-    public TakeawayOrderChartDTO(Long eLeMe, Long kouBei, Long meiTuan) {
-        this.eLeMe = eLeMe;
+    public TakeawayOrderChartDTO(Long eleMe, Long kouBei, Long meiTuan) {
+        this.eleMe = eleMe;
         this.kouBei = kouBei;
         this.meiTuan = meiTuan;
     }
@@ -65,7 +65,7 @@ public class TakeawayOrderChartDTO {
     @Override
     public String toString() {
         return "TakeawayOrderChartDTO{" +
-                "eLeMe=" + eLeMe +
+                "eleMe=" + eleMe +
                 ", kouBei=" + kouBei +
                 ", meiTuan=" + meiTuan +
                 '}';
