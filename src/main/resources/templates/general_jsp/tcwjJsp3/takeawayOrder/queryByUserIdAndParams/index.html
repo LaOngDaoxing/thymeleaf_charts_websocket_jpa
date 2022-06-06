@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 头部加入thymeleaf命名空间 th标签引入 -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>图表（根据用户id、前台页面条件，列表查询外卖订单表）-前台html页面使用thymeleaf框架</title>
+<!--
+http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndParamsIndex
+-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body class="container" style="width: 60%">
+<div id="queryConditions">
+    商品名称：<input id="param1" name="param1" placeholder="请输入商品名称" value="米" onchange="tcwjJsp1ByParam.index.toByUserIdAndParamsAddUpdateParams()"/>
+</div>
+<div class="form-group"></br>
+    <div class="row">
+        <div class="col-md-6">
+            <h5>实时展示</h5>
+        </div>
+        <div class="col-md-6">
+            <input type="button" class="btn-danger" id="stopMsg" value="断开实时">
+        </div>
+    </div>
+    <div id="main" style="width: 600px;height:400px;"></div>
+</div>
+<div class="form-group">
+    <a th:href="@{/index1/toByUserIdAndParamsAdd(param1=1)}" target="_blank" id="toByUserIdAndParamsAddBtnId">跳转新增页面</a>
+</div>
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/echarts.min.js}"></script>
+<!--引用templates/page/common/common.html中的通用标签scriptCommon-->
+<script type="text/javascript" th:replace="page/common/common :: scriptCommon"/>
+<script type="text/javascript">
+    // ##---------- 一、全局变量
+    var tcwjJsp1ByParam={};
+    tcwjJsp1ByParam={};
+    tcwjJsp1ByParam.index={};
+    // 基于准备好的dom，初始化echarts实例
+    tcwjJsp1ByParam.index.myChart = echarts.init(document.getElementById('main'));
+
+    tcwjJsp1ByParam.index.option = {
+        backgroundColor: '#2c343c',
+        title: {
+            text: '外卖订单-平台比例',
+            left: 'center',
+            top: 20,
+            textStyle: {
+                color: '#ccc'
+            }
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        series: [
+            {
+                name: '外卖订单-平台比例',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '50%'],
+                data: [
+                    {itemStyle: {normal: {color: '#ae2216'}}},
+                    {itemStyle: {normal: {color: '#1a1eae'}}},
+                    {itemStyle: {normal: {color: '#ae9aa8'}}}
+                ].sort(function (a, b) {
+                    return a.name - b.name;
+                }),
+                roseType: 'radius',
+                label: {
+                    color: 'rgba(255, 255, 255, 0.3)'
+                },
+                labelLine: {
+                    lineStyle: {
+                        color: 'rgba(255, 255, 255, 0.3)'
+                    },
+                    smooth: 0.2,
+                    length: 10,
+                    length2: 20
+                },
+                itemStyle: {
+                    color: '#c23531',
+                    shadowBlur: 200,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                },
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
+                }
+            }
+        ]
+    };
+    tcwjJsp1ByParam.index.httpContextPathAndCon = G.httpContextPath+'/takeawayOrder1';
+    tcwjJsp1ByParam.index.wsContextPathAndCon = G.wsContextPath+'/takeawayOrderWs1';
+    tcwjJsp1ByParam.index.ws = null;
+    tcwjJsp1ByParam.index.groupCode=null;
+    tcwjJsp1ByParam.index.userId=null;
+    // 到websocket服务端，的客户端类型
+    var toWebsocketOfClientType="websocketJs";
+    // ##---------- 二、页面加载执行
+    $(function () {
+        tcwjJsp1ByParam.index.groupCode="dkh";
+        tcwjJsp1ByParam.index.userId="54fdea80-f6a5-11eb-9810-f44d300627e6";
+        // 先ajax_后台根据用户id，获取用户信息；并在页面图表中第一次初始化显示此数据；
+        tcwjJsp1ByParam.index.firstInitChartData(tcwjJsp1ByParam.index.httpContextPathAndCon,tcwjJsp1ByParam.index.userId);
+        // 然后打开长连接实时监听
+        tcwjJsp1ByParam.index.websocketRtc(tcwjJsp1ByParam.index.wsContextPathAndCon,tcwjJsp1ByParam.index.ws,tcwjJsp1ByParam.index.groupCode,tcwjJsp1ByParam.index.userId,tcwjJsp1ByParam.index.toWebsocketOfClientType);
+        // 点击按钮，手动断开连接
+        $('#stopMsg').click(function () {
+            var tip = '确认断开实时图表显示吗？如果想重新实时监控，请刷新页面。';
+            if (confirm(tip)) {
+                // 主动断开连接
+                tcwjJsp1ByParam.index.ws.close();
+                $(this).attr('disabled','disabled');
+                $(this).attr('class','btn-default');
+            }
+        });
+    });
+    /**
+     * @Description：先ajax_后台根据用户id，获取用户信息；并在页面图表中第一次初始化显示此数据；
+     */
+    tcwjJsp1ByParam.index.firstInitChartData=function(httpContextPathAndCon,userId){
+        var sexParam=$("#sexParam").val();
+        var param1=$("#param1").val();
+        // 根据用户id、前台页面条件，列表查询用户表
+        var getUrl=httpContextPathAndCon+"/"+userId+"/queryByParams"+"?param1="+param1;
+        $.get(getUrl, function (data) {
+            // 拿到后台返回数据data
+            var jsonObject =data;
+            // 渲染数据到图表
+            tcwjJsp1ByParam.index.renderDataToEchart(tcwjJsp1ByParam.index.option,tcwjJsp1ByParam.index.myChart,jsonObject);
+        });
+    }
+    /**
+     * @Description：然后打开长连接实时监听
+     * @param wsContextPathAndCon
+     * @param ws
+     * @param groupCode
+     * @param userId
+     * @param toWebsocketOfClientType
+     */
+    tcwjJsp1ByParam.index.websocketRtc=function(wsContextPathAndCon,ws,groupCode,userId,toWebsocketOfClientType){
+        var param1=$("#param1").val();
+        var wsUrl = wsContextPathAndCon +"/"+groupCode+"/"+ userId+"?param1="+param1;
+        // 创建对象
+        ws = new WebSocket(wsUrl);
+        // 监听 握手成功/建立连接
+        ws.onopen = function () {
+            console.log("建立连接...");
+            var messageObj={provinceMsg:"河北省",cityMsg:"石家庄市",emailMsg:param1};
+            //  JavaScript对象 ——>转 字符串
+            var message=JSON.stringify(messageObj);
+            // 客户端ws.send发送的消息（或心跳信息）message：可以是字符串、二进制数据
+            ws.send(toWebsocketOfClientType+"_"+message);
+        };
+        // 前端接收消息/监听后端的消息推送
+        ws.onmessage = function (event) {
+            console.log("后台数据已更新...");
+            // 拿到后台返回数据event.data，字符串 ——>转 JavaScript对象
+            var jsonObject = JSON.parse(event.data);
+            // 渲染数据到图表
+            tcwjJsp1ByParam.index.renderDataToEchart(tcwjJsp1ByParam.index.option,tcwjJsp1ByParam.index.myChart,jsonObject);
+        };
+        // 监听断开连接
+        ws.onclose = function () {
+            console.log("关闭 websocket 连接...");
+        };
+        // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+        window.onbeforeunload = function(){
+            ws.close();
+        }
+    }
+
+    /**
+     * @Description： 渲染数据到图表
+     * @param option
+     * @param myChart
+     * @param jsonObject
+     */
+    tcwjJsp1ByParam.index.renderDataToEchart=function(option,myChart,jsonObject){
+        // 渲染数据
+        option.series[0].data[0].name = "饿了么";
+        option.series[0].data[0].value = jsonObject.eleMe;
+        option.series[0].data[1].name = "口碑";
+        option.series[0].data[1].value = jsonObject.kouBei;
+        option.series[0].data[2].name = "美团";
+        option.series[0].data[2].value = jsonObject.meiTuan;
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    /**
+     * 查询条件变更后，修改传入后台"index/toByUserIdAndParamsAdd"的请求参数
+     */
+    tcwjJsp1ByParam.index.toByUserIdAndParamsAddUpdateParams=function(){
+        var param1=$("#param1").val();
+        let domEl=document.getElementById('toByUserIdAndParamsAddBtnId');
+        domEl.href=G.httpContextPath+"/index1/toByUserIdAndParamsAdd"+"?param1="+param1;
+    }
+</script>
+</body>
+</html>

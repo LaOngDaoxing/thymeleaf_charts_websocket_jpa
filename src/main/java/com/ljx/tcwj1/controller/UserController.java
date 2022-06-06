@@ -1,5 +1,6 @@
 package com.ljx.tcwj1.controller;
 
+import com.ljx.tcwj1.utils.SessionUtil;
 import com.ljx.tcwj1.utils.WebSocketSendUtil;
 import com.ljx.tcwjneln._09util.constantutil.ConstantUtil;
 import com.ljx.tcwjneln._09util.maputil.MapGetter;
@@ -118,7 +119,7 @@ public class UserController {
     @OnOpen
     public void openSession(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, Session session) {
         // ##-------- 从session中，获取请求路径中携带的信息
-        WebSocketSendUtil.gainUrlParamFromSession(session);
+        SessionUtil.gainUrlParamFromSession(session);
         List<Session> list = WebSocketSendUtil.ONLINE_USER_SESSIONS.get(userId);
         // 如果该用户当前是第一次连接/没有在别的终端登录
         if (null == list) {
@@ -141,7 +142,7 @@ public class UserController {
     @OnMessage
     public void onMessage(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, String message, Session session) {
         // ##-------- 从session中，获取请求路径中携带的信息
-        WebSocketSendUtil.gainUrlParamFromSession(session);
+        SessionUtil.gainUrlParamFromSession(session);
         // 前台用户终端【浏览器】页面，ws.send发送的消息（或心跳信息）
         if(message.startsWith(ConstantUtil.TO_WEBSOCKET_OF_CLIENT_TYPE1)){
             System.out.println(userId + "前台用户终端【浏览器】页面，ws.send发送的消息（或心跳信息）：" + message);
@@ -171,7 +172,7 @@ public class UserController {
     @OnClose
     public void onClose(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, Session session) {
         // ##-------- 从session中，获取请求路径中携带的信息
-        WebSocketSendUtil.gainUrlParamFromSession(session);
+        SessionUtil.gainUrlParamFromSession(session);
         List<Session> list = WebSocketSendUtil.ONLINE_USER_SESSIONS.get(userId);
         // 移除该用户的websocket session记录
         list.remove(session);
