@@ -77,24 +77,24 @@ public class TakeawayOrderServiceImpl implements TakeawayOrderService {
     }
     @Override
     public TakeawayOrderChartDTO dealTakeawayOrderChartDTOByParams(Map<String, Object> params) {
-        TakeawayOrderChartDTO TakeawayOrderChartDTO = new TakeawayOrderChartDTO();
+        TakeawayOrderChartDTO takeawayOrderChartDTO = new TakeawayOrderChartDTO();
         List<Map<String, Object>> mapList = selectSexNumListByParams(params);
         if (null != mapList && mapList.size() > 0) {
             mapList.forEach((Map<String, Object> map) -> {
                 int switchI=Integer.valueOf(map.get("platformId").toString()) ;
                 switch (switchI) {
                     case 1:
-                        TakeawayOrderChartDTO.setEleMe(((BigInteger)map.get("platformIdNum")).longValue());
+                        takeawayOrderChartDTO.setEleMe(((BigInteger)map.get("platformIdNum")).longValue());
                         break;
                     case 2:
-                        TakeawayOrderChartDTO.setKouBei(((BigInteger)map.get("platformIdNum")).longValue());
+                        takeawayOrderChartDTO.setKouBei(((BigInteger)map.get("platformIdNum")).longValue());
                         break;
                     default:
-                        TakeawayOrderChartDTO.setMeiTuan(((BigInteger)map.get("platformIdNum")).longValue());
+                        takeawayOrderChartDTO.setMeiTuan(((BigInteger)map.get("platformIdNum")).longValue());
                         break;
                 }
             });
         }
-        return TakeawayOrderChartDTO;
+        return takeawayOrderChartDTO;
     }
 }
