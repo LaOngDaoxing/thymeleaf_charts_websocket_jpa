@@ -1,6 +1,5 @@
 package com.ljx.tcwj1.utils;
 
-import com.ljx.tcwjneln._02variables._07convertVar._05Convert_Str_Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +21,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author  ljx
  *
  */
-public class WebSocketSendUtil {
-    private static final Logger logger = LoggerFactory.getLogger(WebSocketSendUtil.class);
+public class TakeawayOrderWebSocket1Server {
+    private static final Logger logger = LoggerFactory.getLogger(TakeawayOrderWebSocket1Server.class);
     /**
      * 存储 websocket session等，以记录每个用户下多个终端【PC（不同浏览器登陆，产生的sessionid不同）、pad、phone】的连接
      */

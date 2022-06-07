@@ -3,7 +3,6 @@ package com.ljx.tcwj2.websocket;
 import com.alibaba.fastjson.JSON;
 import com.ljx.tcwj1.pojo.dto.UserChartDTO;
 import com.ljx.tcwj1.utils.SessionUtil;
-import com.ljx.tcwj1.utils.WebSocketSendUtil;
 import com.ljx.tcwjneln._09util.constantutil.ConstantUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,10 +30,10 @@ import java.util.concurrent.ConcurrentHashMap;
 * @author  ljx
 *
  */
-@ServerEndpoint("/takeawayOrderWs1/{groupCode}/{userId}")
+@ServerEndpoint("/takeawayOrderWs2/{groupCode}/{userId}")
 @Component
-public class UserWebSocketServer {
-    private static final Logger logger = LoggerFactory.getLogger(UserWebSocketServer.class);
+public class TakeawayOrderWebSocket2Server {
+    private static final Logger logger = LoggerFactory.getLogger(TakeawayOrderWebSocket2Server.class);
     /**
      * 存储 websocket session等，以记录每个用户下多个终端【PC（不同浏览器登陆，产生的sessionid不同）、pad、phone】的连接
      */

@@ -4,21 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.ljx.tcwj1.pojo.doo.TakeawayOrderDO;
 import com.ljx.tcwj1.pojo.dto.TakeawayOrderChartDTO;
 import com.ljx.tcwj1.service.TakeawayOrderService;
-import com.ljx.tcwj1.utils.SessionUtil;
-import com.ljx.tcwj1.utils.WebSocketSendUtil;
+import com.ljx.tcwj1.utils.TakeawayOrderWebSocket1Server;
 import com.ljx.tcwjneln._02variables._05initVar._02Init_Str_JsonStr;
-import com.ljx.tcwjneln._09util.constantutil.ConstantUtil;
 import com.ljx.tcwjneln._09util.maputil.MapGetter;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.websocket.*;
-import javax.websocket.server.PathParam;
-import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,7 +40,7 @@ import java.util.Map;
  */
 @RestController()
 @RequestMapping("/takeawayOrder2")
-public class TakeawayOrderController {
+public class TakeawayOrder2Controller {
 
     @Resource
     TakeawayOrderService takeawayOrderService;
@@ -86,7 +78,7 @@ public class TakeawayOrderController {
         // 拼装数据DTO通知前端
         TakeawayOrderChartDTO takeawayOrderChartDTO = takeawayOrderService.dealTakeawayOrderChartDTOByUserId(takeawayOrderDO.getUserId());
         // 通知前端，向前台发送消息
-        WebSocketSendUtil.sendMessageToWebsocketJs(takeawayOrderDO.getUserId(), JSON.toJSONString(takeawayOrderChartDTO));
+        TakeawayOrderWebSocket1Server.sendMessageToWebsocketJs(takeawayOrderDO.getUserId(), JSON.toJSONString(takeawayOrderChartDTO));
         return result;
     }
     /**
@@ -129,7 +121,7 @@ public class TakeawayOrderController {
         // 拼装的用户数据（根据用户id、前台页面条件，列表查询用户表）
         TakeawayOrderChartDTO takeawayOrderChartDTO = takeawayOrderService.dealTakeawayOrderChartDTOByParams(params);
         // 通知前端，向前台发送消息
-        WebSocketSendUtil.sendMessageToWebsocketJs(takeawayOrderDO.getUserId(), JSON.toJSONString(takeawayOrderChartDTO));
+        TakeawayOrderWebSocket1Server.sendMessageToWebsocketJs(takeawayOrderDO.getUserId(), JSON.toJSONString(takeawayOrderChartDTO));
         return result;
     }
 }

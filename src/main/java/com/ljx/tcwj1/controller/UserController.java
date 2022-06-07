@@ -1,7 +1,7 @@
 package com.ljx.tcwj1.controller;
 
 import com.ljx.tcwj1.utils.SessionUtil;
-import com.ljx.tcwj1.utils.WebSocketSendUtil;
+import com.ljx.tcwj1.utils.TakeawayOrderWebSocket1Server;
 import com.ljx.tcwjneln._09util.constantutil.ConstantUtil;
 import com.ljx.tcwjneln._09util.maputil.MapGetter;
 import com.ljx.tcwj1.pojo.doo.UserDO;
@@ -67,7 +67,7 @@ public class UserController {
         // 拼装数据DTO通知前端
         UserChartDTO userChartDTO = userService.dealUserChartDtoByUserId(user.getUserId());
         // 通知前端，向前台发送消息
-        WebSocketSendUtil.sendMessageToWebsocketJs(user.getUserId(), JSON.toJSONString(userChartDTO));
+        TakeawayOrderWebSocket1Server.sendMessageToWebsocketJs(user.getUserId(), JSON.toJSONString(userChartDTO));
         return result;
     }
     /**
@@ -106,7 +106,7 @@ public class UserController {
         // 拼装的用户数据（根据用户id、前台页面条件，列表查询用户表）
         UserChartDTO userChartDTO = userService.dealUserChartDtoByParams(params);
         // 通知前端，向前台发送消息
-        WebSocketSendUtil.sendMessageToWebsocketJs(user.getUserId(), JSON.toJSONString(userChartDTO));
+        TakeawayOrderWebSocket1Server.sendMessageToWebsocketJs(user.getUserId(), JSON.toJSONString(userChartDTO));
         return result;
     }
     /*######################## 一、根据用户id，接收 消息(用户信息)的 websocket服务端 ########################*/
@@ -120,7 +120,7 @@ public class UserController {
     public void openSession(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, Session session) {
         // ##-------- 从session中，获取请求路径中携带的信息
         SessionUtil.gainUrlParamFromSession(session);
-        List<Session> list = WebSocketSendUtil.ONLINE_USER_SESSIONS.get(userId);
+        List<Session> list = TakeawayOrderWebSocket1Server.ONLINE_USER_SESSIONS.get(userId);
         // 如果该用户当前是第一次连接/没有在别的终端登录
         if (null == list) {
             list = new ArrayList<>();
@@ -129,7 +129,7 @@ public class UserController {
         if (!list.contains(session)) {
             list.add(session);
         }
-        WebSocketSendUtil.ONLINE_USER_SESSIONS.put(userId, list);
+        TakeawayOrderWebSocket1Server.ONLINE_USER_SESSIONS.put(userId, list);
     }
 
     /**
@@ -159,7 +159,7 @@ public class UserController {
             userId="";
             // 根据条件，列表查询用户表
             UserChartDTO userChartDTO =new UserChartDTO();
-            WebSocketSendUtil.sendMessageToWebsocketJs(userId, JSON.toJSONString(userChartDTO));
+            TakeawayOrderWebSocket1Server.sendMessageToWebsocketJs(userId, JSON.toJSONString(userChartDTO));
         }
     }
 
@@ -173,7 +173,7 @@ public class UserController {
     public void onClose(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, Session session) {
         // ##-------- 从session中，获取请求路径中携带的信息
         SessionUtil.gainUrlParamFromSession(session);
-        List<Session> list = WebSocketSendUtil.ONLINE_USER_SESSIONS.get(userId);
+        List<Session> list = TakeawayOrderWebSocket1Server.ONLINE_USER_SESSIONS.get(userId);
         // 移除该用户的websocket session记录
         list.remove(session);
         try {

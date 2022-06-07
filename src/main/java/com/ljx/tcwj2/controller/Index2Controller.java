@@ -27,7 +27,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/index2")
-public class IndexController {
+public class Index2Controller {
     /**
       跳转到的前台页面路径前缀
      */
