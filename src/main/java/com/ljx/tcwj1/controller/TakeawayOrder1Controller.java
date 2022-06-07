@@ -122,7 +122,7 @@ public class TakeawayOrder1Controller {
         // 保存数据
         TakeawayOrderDO result = takeawayOrderService.addTakeawayOrderDO(takeawayOrderDO);
         String userId=takeawayOrderDO.getUserId();
-        String param1=takeawayOrderDO.getGoodsName();
+        String param1=takeawayOrderDO.getParam1();
         Map<String, Object> params=new HashMap<String, Object>(MapGetter.defaultInitialCapacity());
         params.put("userId",userId);
         params.put("param1",param1);

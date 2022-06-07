@@ -98,6 +98,10 @@ public class TakeawayOrderDO {
     @Column(columnDefinition = "varchar(100) default '' comment '商品名称'")
     private String goodsName;
     /**
+     * 查询条件
+     */
+    private String param1;
+    /**
      * 右键》Generate》Getter and Setter...》
      */
     public Long getId() {
@@ -228,6 +232,14 @@ public class TakeawayOrderDO {
         this.goodsName = goodsName;
     }
 
+    public String getParam1() {
+        return param1;
+    }
+
+    public void setParam1(String param1) {
+        this.param1 = param1;
+    }
+
     /**
      *
      * @Description：无参构造函数
@@ -241,7 +253,7 @@ public class TakeawayOrderDO {
     /**
      * 使用字段，生成带参数的 构造函数：右键》Generate》Constructor》字段全选》点击OK 》
      */
-    public TakeawayOrderDO(Long id, String groupCode, String takeawayOrderId, String userId, String platformId, String platformName, String provinceCode, String provinceName, String cityCode, String cityName, String countyCode, String countyName, String sellerId, String sellerName, String goodsId, String goodsName) {
+    public TakeawayOrderDO(Long id, String groupCode, String takeawayOrderId, String userId, String platformId, String platformName, String provinceCode, String provinceName, String cityCode, String cityName, String countyCode, String countyName, String sellerId, String sellerName, String goodsId, String goodsName,String param1) {
         this.id = id;
         this.groupCode = groupCode;
         this.takeawayOrderId = takeawayOrderId;
@@ -258,6 +270,7 @@ public class TakeawayOrderDO {
         this.sellerName = sellerName;
         this.goodsId = goodsId;
         this.goodsName = goodsName;
+        this.param1 = param1;
     }
 
     /**
@@ -282,6 +295,7 @@ public class TakeawayOrderDO {
                 ", sellerName='" + sellerName + '\'' +
                 ", goodsId='" + goodsId + '\'' +
                 ", goodsName='" + goodsName + '\'' +
+                ", param1='" + param1 + '\'' +
                 '}';
     }
 }
