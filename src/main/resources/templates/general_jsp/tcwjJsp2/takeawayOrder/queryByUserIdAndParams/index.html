@@ -206,7 +206,10 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index2/toQueryByUserIdAndPa
     tcwjJsp2ByParam.index.gainParamVal= function(){
         var param1=document.getElementById("param1").value;
         var href=$("#toByUserIdAndParamsAddBtnId");
-        window.location.href=G.httpContextPath+"/index2/toByUserIdAndParamsAdd?param1="+param1;
+        // 当前窗口跳转新页面
+        // window.location.href=G.httpContextPath+"/index2/toByUserIdAndParamsAdd?param1="+param1;
+        // 新窗口跳转新页面
+        window.open(G.httpContextPath+"/index2/toByUserIdAndParamsAdd?param1="+param1);
         console.log("获取当前页面的查询条件--"+param1);
     }
 </script>
