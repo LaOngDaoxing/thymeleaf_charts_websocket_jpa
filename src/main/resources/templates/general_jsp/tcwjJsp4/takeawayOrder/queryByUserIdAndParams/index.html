@@ -6,13 +6,13 @@
     <meta charset="UTF-8">
     <title>图表（根据用户id、前台页面条件，列表查询外卖订单表）-前台html页面使用thymeleaf框架</title>
 <!--
-http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndParamsIndex
+http://localhost:8090/thymeleaf_charts_websocket_jpa/index4/toQueryByUserIdAndParamsIndex
 -->
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body class="container" style="width: 60%">
 <div id="queryConditions">
-    商品名称：<input id="param1" name="param1" placeholder="请输入商品名称" value="米" onchange="tcwjJsp1ByParam.index.toByUserIdAndParamsAddUpdateParams()"/>
+    商品名称：<input id="param1" name="param1" placeholder="请输入商品名称" value="米" onchange="tcwjJsp4ByParam.index.toByUserIdAndParamsAddUpdateParams()"/>
 </div>
 <div class="form-group"></br>
     <div class="row">
@@ -26,7 +26,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
     <div id="main" style="width: 600px;height:400px;"></div>
 </div>
 <div class="form-group">
-    <a th:href="@{/index1/toByUserIdAndParamsAdd(param1=1)}" target="_blank" id="toByUserIdAndParamsAddBtnId">跳转新增页面</a>
+    <a href="" target="_blank" id="toByUserIdAndParamsAddBtnId" onclick="tcwjJsp4ByParam.index.gainParamVal()">跳转新增页面</a>
 </div>
 <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script th:src="@{/js/echarts.min.js}"></script>
@@ -34,13 +34,13 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
 <script type="text/javascript" th:replace="page/common/common :: scriptCommon"/>
 <script type="text/javascript">
     // ##---------- 一、全局变量
-    var tcwjJsp1ByParam={};
-    tcwjJsp1ByParam={};
-    tcwjJsp1ByParam.index={};
+    var tcwjJsp4ByParam={};
+    tcwjJsp4ByParam={};
+    tcwjJsp4ByParam.index={};
     // 基于准备好的dom，初始化echarts实例
-    tcwjJsp1ByParam.index.myChart = echarts.init(document.getElementById('main'));
+    tcwjJsp4ByParam.index.myChart = echarts.init(document.getElementById('main'));
 
-    tcwjJsp1ByParam.index.option = {
+    tcwjJsp4ByParam.index.option = {
         backgroundColor: '#2c343c',
         title: {
             text: '外卖订单-平台比例',
@@ -92,27 +92,27 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
             }
         ]
     };
-    tcwjJsp1ByParam.index.httpContextPathAndCon = G.httpContextPath+'/takeawayOrder1';
-    tcwjJsp1ByParam.index.wsContextPathAndCon = G.wsContextPath+'/takeawayOrderWs1';
-    tcwjJsp1ByParam.index.ws = null;
-    tcwjJsp1ByParam.index.groupCode=null;
-    tcwjJsp1ByParam.index.userId=null;
+    tcwjJsp4ByParam.index.httpContextPathAndCon = G.httpContextPath+'/takeawayOrder4';
+    tcwjJsp4ByParam.index.wsContextPathAndCon = G.wsContextPath+'/takeawayOrderWs4';
+    tcwjJsp4ByParam.index.ws = null;
+    tcwjJsp4ByParam.index.groupCode=null;
+    tcwjJsp4ByParam.index.userId=null;
     // 到websocket服务端，的客户端类型
     var toWebsocketOfClientType="websocketJs";
     // ##---------- 二、页面加载执行
     $(function () {
-        tcwjJsp1ByParam.index.groupCode="dkh";
-        tcwjJsp1ByParam.index.userId="54fdea80-f6a5-11eb-9810-f44d300627e6";
+        tcwjJsp4ByParam.index.groupCode="dkh";
+        tcwjJsp4ByParam.index.userId="54fdea80-f6a5-11eb-9810-f44d300627e6";
         // 先ajax_后台根据用户id，获取用户信息；并在页面图表中第一次初始化显示此数据；
-        tcwjJsp1ByParam.index.firstInitChartData(tcwjJsp1ByParam.index.httpContextPathAndCon,tcwjJsp1ByParam.index.userId);
+        tcwjJsp4ByParam.index.firstInitChartData(tcwjJsp4ByParam.index.httpContextPathAndCon,tcwjJsp4ByParam.index.userId);
         // 然后打开长连接实时监听
-        tcwjJsp1ByParam.index.websocketRtc(tcwjJsp1ByParam.index.wsContextPathAndCon,tcwjJsp1ByParam.index.ws,tcwjJsp1ByParam.index.groupCode,tcwjJsp1ByParam.index.userId,tcwjJsp1ByParam.index.toWebsocketOfClientType);
+        tcwjJsp4ByParam.index.websocketRtc(tcwjJsp4ByParam.index.wsContextPathAndCon,tcwjJsp4ByParam.index.ws,tcwjJsp4ByParam.index.groupCode,tcwjJsp4ByParam.index.userId,tcwjJsp4ByParam.index.toWebsocketOfClientType);
         // 点击按钮，手动断开连接
         $('#stopMsg').click(function () {
             var tip = '确认断开实时图表显示吗？如果想重新实时监控，请刷新页面。';
             if (confirm(tip)) {
                 // 主动断开连接
-                tcwjJsp1ByParam.index.ws.close();
+                tcwjJsp4ByParam.index.ws.close();
                 $(this).attr('disabled','disabled');
                 $(this).attr('class','btn-default');
             }
@@ -121,7 +121,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
     /**
      * @Description：先ajax_后台根据用户id，获取用户信息；并在页面图表中第一次初始化显示此数据；
      */
-    tcwjJsp1ByParam.index.firstInitChartData=function(httpContextPathAndCon,userId){
+    tcwjJsp4ByParam.index.firstInitChartData=function(httpContextPathAndCon,userId){
         var sexParam=$("#sexParam").val();
         var param1=$("#param1").val();
         // 根据用户id、前台页面条件，列表查询用户表
@@ -130,7 +130,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
             // 拿到后台返回数据data
             var jsonObject =data;
             // 渲染数据到图表
-            tcwjJsp1ByParam.index.renderDataToEchart(tcwjJsp1ByParam.index.option,tcwjJsp1ByParam.index.myChart,jsonObject);
+            tcwjJsp4ByParam.index.renderDataToEchart(tcwjJsp4ByParam.index.option,tcwjJsp4ByParam.index.myChart,jsonObject);
         });
     }
     /**
@@ -141,7 +141,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
      * @param userId
      * @param toWebsocketOfClientType
      */
-    tcwjJsp1ByParam.index.websocketRtc=function(wsContextPathAndCon,ws,groupCode,userId,toWebsocketOfClientType){
+    tcwjJsp4ByParam.index.websocketRtc=function(wsContextPathAndCon,ws,groupCode,userId,toWebsocketOfClientType){
         var param1=$("#param1").val();
         var wsUrl = wsContextPathAndCon +"/"+groupCode+"/"+ userId+"?param1="+param1;
         // 创建对象
@@ -161,7 +161,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
             // 拿到后台返回数据event.data，字符串 ——>转 JavaScript对象
             var jsonObject = JSON.parse(event.data);
             // 渲染数据到图表
-            tcwjJsp1ByParam.index.renderDataToEchart(tcwjJsp1ByParam.index.option,tcwjJsp1ByParam.index.myChart,jsonObject);
+            tcwjJsp4ByParam.index.renderDataToEchart(tcwjJsp4ByParam.index.option,tcwjJsp4ByParam.index.myChart,jsonObject);
         };
         // 监听断开连接
         ws.onclose = function () {
@@ -179,7 +179,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
      * @param myChart
      * @param jsonObject
      */
-    tcwjJsp1ByParam.index.renderDataToEchart=function(option,myChart,jsonObject){
+    tcwjJsp4ByParam.index.renderDataToEchart=function(option,myChart,jsonObject){
         // 渲染数据
         option.series[0].data[0].name = "饿了么";
         option.series[0].data[0].value = jsonObject.eleMe;
@@ -194,10 +194,23 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndPa
     /**
      * 查询条件变更后，修改传入后台"index/toByUserIdAndParamsAdd"的请求参数
      */
-    tcwjJsp1ByParam.index.toByUserIdAndParamsAddUpdateParams=function(){
+    tcwjJsp4ByParam.index.toByUserIdAndParamsAddUpdateParams=function(){
         var param1=$("#param1").val();
         let domEl=document.getElementById('toByUserIdAndParamsAddBtnId');
-        domEl.href=G.httpContextPath+"/index1/toByUserIdAndParamsAdd"+"?param1="+param1;
+        domEl.href=G.httpContextPath+"/index4/toByUserIdAndParamsAdd"+"?param1="+param1;
+    }
+    /**
+     * 获取当前页面的查询条件
+     * @returns {*}
+     */
+    tcwjJsp4ByParam.index.gainParamVal= function(){
+        var param1=document.getElementById("param1").value;
+        var href=$("#toByUserIdAndParamsAddBtnId");
+        // 当前窗口跳转新页面
+        // window.location.href=G.httpContextPath+"/index4/toByUserIdAndParamsAdd?param1="+param1;
+        // 新窗口跳转新页面
+        window.open(G.httpContextPath+"/index4/toByUserIdAndParamsAdd?param1="+param1);
+        console.log("获取当前页面的查询条件--"+param1);
     }
 </script>
 </body>

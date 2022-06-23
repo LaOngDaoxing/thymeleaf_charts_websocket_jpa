@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>图表（根据用户id，列表查询外卖订单表）-前台html页面使用thymeleaf框架</title>
 <!--
-http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
+http://localhost:8090/thymeleaf_charts_websocket_jpa/index3/toQueryByUserIdIndex
 -->
     <!--如果在静态资源路径（resources/static/）下找不到 index.html，则会到（resources/templates/）目录下找-->
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -24,7 +24,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
     <div id="main" style="width: 600px;height:400px;"></div>
 </div>
 <div class="form-group">
-    <a th:href="@{/index1/toByUserIdAdd}" target="_blank">跳转新增页面</a>
+    <a th:href="@{/index3/toByUserIdAdd}" target="_blank">跳转新增页面</a>
 </div>
 <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script th:src="@{/js/echarts.min.js}"></script>
@@ -32,13 +32,13 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
 <script type="text/javascript" th:replace="page/common/common :: scriptCommon"/>
 <script type="text/javascript">
     // ##---------- 一、全局变量
-    var tcwjJsp1ById={};
-    tcwjJsp1ById={};
-    tcwjJsp1ById.index={};
+    var tcwjJsp3ById={};
+    tcwjJsp3ById={};
+    tcwjJsp3ById.index={};
     // 基于准备好的dom，初始化echarts实例
-    tcwjJsp1ById.index.myChart = echarts.init(document.getElementById('main'));
+    tcwjJsp3ById.index.myChart = echarts.init(document.getElementById('main'));
 
-    tcwjJsp1ById.index.option = {
+    tcwjJsp3ById.index.option = {
         backgroundColor: '#2c343c',
         title: {
             text: '外卖订单-平台比例',
@@ -90,27 +90,27 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
             }
         ]
     };
-    tcwjJsp1ById.index.httpContextPathAndCon = G.httpContextPath+'/takeawayOrder1';
-    tcwjJsp1ById.index.wsContextPathAndCon = G.wsContextPath+'/takeawayOrderWs1';
-    tcwjJsp1ById.index.ws = null;
-    tcwjJsp1ById.index.groupCode=null;
-    tcwjJsp1ById.index.userId=null;
+    tcwjJsp3ById.index.httpContextPathAndCon = G.httpContextPath+'/takeawayOrder3';
+    tcwjJsp3ById.index.wsContextPathAndCon = G.wsContextPath+'/takeawayOrderWs3';
+    tcwjJsp3ById.index.ws = null;
+    tcwjJsp3ById.index.groupCode=null;
+    tcwjJsp3ById.index.userId=null;
     // 到websocket服务端，的客户端类型
-    tcwjJsp1ById.index.toWebsocketOfClientType="websocketJs";
+    tcwjJsp3ById.index.toWebsocketOfClientType="websocketJs";
     // ##---------- 二、页面加载执行
     $(function () {
-        tcwjJsp1ById.index.groupCode="dkh";
-        tcwjJsp1ById.index.userId="54fdea80-f6a5-11eb-9810-f44d300627e6";
+        tcwjJsp3ById.index.groupCode="dkh";
+        tcwjJsp3ById.index.userId="54fdea80-f6a5-11eb-9810-f44d300627e6";
         // 先ajax_后台根据用户id，获取用户信息；并在页面图表中第一次初始化显示此数据；
-        tcwjJsp1ById.index.firstInitChartData(tcwjJsp1ById.index.httpContextPathAndCon,tcwjJsp1ById.index.userId);
+        tcwjJsp3ById.index.firstInitChartData(tcwjJsp3ById.index.httpContextPathAndCon,tcwjJsp3ById.index.userId);
         // 然后打开长连接实时监听
-        tcwjJsp1ById.index.websocketRtc(tcwjJsp1ById.index.wsContextPathAndCon,tcwjJsp1ById.index.ws,tcwjJsp1ById.index.groupCode,tcwjJsp1ById.index.userId,tcwjJsp1ById.index.toWebsocketOfClientType);
+        tcwjJsp3ById.index.websocketRtc(tcwjJsp3ById.index.wsContextPathAndCon,tcwjJsp3ById.index.ws,tcwjJsp3ById.index.groupCode,tcwjJsp3ById.index.userId,tcwjJsp3ById.index.toWebsocketOfClientType);
         // 点击按钮，手动断开连接
         $('#stopMsg').click(function () {
             var tip = '确认断开实时图表显示吗？如果想重新实时监控，请刷新页面。';
             if (confirm(tip)) {
                 // 主动断开连接
-                tcwjJsp1ById.index.ws.close();
+                tcwjJsp3ById.index.ws.close();
                 $(this).attr('disabled','disabled');
                 $(this).attr('class','btn-default');
             }
@@ -120,7 +120,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
      * @Description：先ajax_后台根据用户id，获取用户信息；并在页面图表中第一次初始化显示此数据；
      * @param userId
      */
-    tcwjJsp1ById.index.firstInitChartData=function(httpContextPathAndCon,userId){
+    tcwjJsp3ById.index.firstInitChartData=function(httpContextPathAndCon,userId){
         var param1="paramVal123ss";
         // 根据用户id，列表查询用户表
         var getUrl=httpContextPathAndCon+"/"+userId+"/queryByUserId"+"?param1="+param1;
@@ -128,7 +128,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
             // 拿到后台返回数据data
             var jsonObject =data;
             // 渲染数据到图表
-            tcwjJsp1ById.index.renderDataToEchart(tcwjJsp1ById.index.option,tcwjJsp1ById.index.myChart,jsonObject);
+            tcwjJsp3ById.index.renderDataToEchart(tcwjJsp3ById.index.option,tcwjJsp3ById.index.myChart,jsonObject);
         });
     }
     /**
@@ -139,7 +139,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
      * @param userId
      * @param toWebsocketOfClientType
      */
-    tcwjJsp1ById.index.websocketRtc=function(wsContextPathAndCon,ws,groupCode,userId,toWebsocketOfClientType){
+    tcwjJsp3ById.index.websocketRtc=function(wsContextPathAndCon,ws,groupCode,userId,toWebsocketOfClientType){
         var param1="paramVal123ss";
         var wsUrl = wsContextPathAndCon +"/"+groupCode+"/"+ userId+"?param1="+param1;
         // 创建对象
@@ -161,7 +161,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
             var jsonObject = JSON.parse(event.data);
             console.log(jsonObject);
             // 渲染数据到图表
-            tcwjJsp1ById.index.renderDataToEchart(tcwjJsp1ById.index.option,tcwjJsp1ById.index.myChart,jsonObject);
+            tcwjJsp3ById.index.renderDataToEchart(tcwjJsp3ById.index.option,tcwjJsp3ById.index.myChart,jsonObject);
         };
         // 监听断开连接
         ws.onclose = function () {
@@ -179,7 +179,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex
      * @param myChart
      * @param jsonObject
      */
-    tcwjJsp1ById.index.renderDataToEchart=function(option,myChart,jsonObject){
+    tcwjJsp3ById.index.renderDataToEchart=function(option,myChart,jsonObject){
         // 渲染数据
         option.series[0].data[0].name = "饿了么";
         option.series[0].data[0].value = jsonObject.eleMe;

@@ -52,7 +52,7 @@
             location.reload();
         });
         $('#save').click(function () {
-            var param1=$("#param1").val();
+            var param1=$("#goodsNameParam").val();
             var groupCode = $('#groupCode').val();
             var userId = $('#userId').val();
             var platformId = $("input[name='platformId']:checked").val();
@@ -66,7 +66,7 @@
                 alert("平台名称不能为空");
                 return;
             }
-            $.post(G.httpContextPath+'takeawayOrder1/addAndQueryByParams', {param1:param1,groupCode:groupCode,userId: userId,userId: userId, platformId: platformId,  goodsName: goodsName}, function (data) {
+            $.post(G.httpContextPath+'takeawayOrder3/addAndQueryByParams', {param1:param1,groupCode:groupCode,userId: userId,userId: userId, platformId: platformId,  goodsName: goodsName}, function (data) {
                 console.log(data);
                 alert('新增成功！观察统计图实时变化');
             });
