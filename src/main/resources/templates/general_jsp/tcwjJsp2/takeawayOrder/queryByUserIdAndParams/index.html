@@ -26,7 +26,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index2/toQueryByUserIdAndPa
     <div id="main" style="width: 600px;height:400px;"></div>
 </div>
 <div class="form-group">
-    <a th:href="@{/index2/toByUserIdAndParamsAdd(param1=1)}" target="_blank" id="toByUserIdAndParamsAddBtnId">跳转新增页面</a>
+    <a href="" target="_blank" id="toByUserIdAndParamsAddBtnId" onclick="tcwjJsp2ByParam.index.gainParamVal()">跳转新增页面</a>
 </div>
 <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script th:src="@{/js/echarts.min.js}"></script>
@@ -198,6 +198,16 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/index2/toQueryByUserIdAndPa
         var param1=$("#param1").val();
         let domEl=document.getElementById('toByUserIdAndParamsAddBtnId');
         domEl.href=G.httpContextPath+"/index2/toByUserIdAndParamsAdd"+"?param1="+param1;
+    }
+    /**
+     * 获取当前页面的查询条件
+     * @returns {*}
+     */
+    tcwjJsp2ByParam.index.gainParamVal= function(){
+        var param1=document.getElementById("param1").value;
+        var href=$("#toByUserIdAndParamsAddBtnId");
+        window.location.href=G.httpContextPath+"/index2/toByUserIdAndParamsAdd?param1="+param1;
+        console.log("获取当前页面的查询条件--"+param1);
     }
 </script>
 </body>
