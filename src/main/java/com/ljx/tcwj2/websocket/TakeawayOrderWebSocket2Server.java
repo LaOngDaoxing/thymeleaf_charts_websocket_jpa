@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
     注解@ServerEndpoint 是一个类层次的注解，它的功能主要是将目前的类定义成一个websocket服务端。注解的值将被用于监听用户连接的终端访问URL地址。
 * @Remark:
 * @CodeBug解决:
+如果期望ById和ByParams页面在新增后展示返回数据不同，可以设置将session的key=userId，改为session的key=groupCode
 * @date 2021年3月24日 下午1:36:00
 * @author  ljx
 *
@@ -37,7 +38,7 @@ public class TakeawayOrderWebSocket2Server {
     /**
      * 存储 websocket session等，以记录每个用户下多个终端【PC（不同浏览器登陆，产生的sessionid不同）、pad、phone】的连接
      */
-    public static final Map<String, List<Session>> ONLINE_USER_SESSIONS = new ConcurrentHashMap<>();
+    public static final Map<String, List<Session>> ONLINE_SESSIONS_TOWS2_MAP = new ConcurrentHashMap<>();
     /*######################## 一、根据用户id，接收 消息(用户信息)的 websocket服务端 ########################*/
     /**
      * 当前台用户终端【浏览器】页面，使用js WebSocket；与服务器建立连接并完成握手后，前台会回调ws.onopen；后台调用@OnOpen注解的方法。
@@ -49,7 +50,7 @@ public class TakeawayOrderWebSocket2Server {
     public void openSession(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, Session session) {
         // ##-------- 从session中，获取请求路径中携带的信息
         SessionUtil.gainUrlParamFromSession(session);
-        List<Session> list = ONLINE_USER_SESSIONS.get(userId);
+        List<Session> list = ONLINE_SESSIONS_TOWS2_MAP.get(userId);
         // 如果该用户当前是第一次连接/没有在别的终端登录
         if (null == list) {
             list = new ArrayList<>();
@@ -58,7 +59,7 @@ public class TakeawayOrderWebSocket2Server {
         if (!list.contains(session)) {
             list.add(session);
         }
-        ONLINE_USER_SESSIONS.put(userId, list);
+        ONLINE_SESSIONS_TOWS2_MAP.put(userId, list);
     }
     /**
      * 接收客户端发送的消息，并向客户端发送消息
@@ -100,7 +101,7 @@ public class TakeawayOrderWebSocket2Server {
     public void onClose(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, Session session) {
         // ##-------- 从session中，获取请求路径中携带的信息
         SessionUtil.gainUrlParamFromSession(session);
-        List<Session> list = ONLINE_USER_SESSIONS.get(userId);
+        List<Session> list = ONLINE_SESSIONS_TOWS2_MAP.get(userId);
         // 移除该用户的websocket session记录
         list.remove(session);
         try {
@@ -149,7 +150,7 @@ public class TakeawayOrderWebSocket2Server {
      * @return: void
      */
     public static void sendMessageToWebsocketJs(String key, String message) {
-        List<Session> list = ONLINE_USER_SESSIONS.get(key);
+        List<Session> list = ONLINE_SESSIONS_TOWS2_MAP.get(key);
         // 给用户的所有终端发送数据消息
         list.stream().forEach(se -> {
             if(se.isOpen()){

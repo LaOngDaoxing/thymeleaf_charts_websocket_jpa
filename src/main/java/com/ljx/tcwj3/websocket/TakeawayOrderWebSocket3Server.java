@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 注解@ServerEndpoint 是一个类层次的注解，它的功能主要是将目前的类定义成一个websocket服务端。注解的值将被用于监听用户连接的终端访问URL地址。
  * @Remark:
  * @CodeBug解决:
+ 如果期望ById和ByParams页面在新增后展示返回数据不同，可以设置将session的key=userId，改为session的key=groupCode
  * @date 2021年3月24日 下午1:36:00
  * @author  ljx
  *
@@ -42,7 +43,7 @@ public class TakeawayOrderWebSocket3Server {
     /**
      * 存储 websocket session等，以记录每个用户下多个终端【PC（不同浏览器登陆，产生的sessionid不同）、pad、phone】的连接
      */
-    private static Map<String, Set<TakeawayOrderWebSocket3Server>> userWebSocketMap = new ConcurrentHashMap<>();
+    private static Map<String, Set<TakeawayOrderWebSocket3Server>> ONLINE_SESSIONS_TOWS3_MAP = new ConcurrentHashMap<>();
     /**
      * 连接特征userId
      */
@@ -72,21 +73,21 @@ public class TakeawayOrderWebSocket3Server {
         // 在线数加1
         onlineCount++;
         // 如果该用户当前是第一次连接/没有在别的终端登录
-        if (!userWebSocketMap.containsKey(this.userId)) {
+        if (!ONLINE_SESSIONS_TOWS3_MAP.containsKey(this.userId)) {
             logger.debug("当前用户 userId:{}第一个终端登录",this.userId);
             Set<TakeawayOrderWebSocket3Server> addUserSet = new HashSet<>();
             addUserSet.add(this);
             // 对Map增加一个userId
-            userWebSocketMap.put(this.userId, addUserSet);
+            ONLINE_SESSIONS_TOWS3_MAP.put(this.userId, addUserSet);
         }
         // 如果该用户当前不是第一次连接/已经在别的终端登录
         else {
             logger.debug("当前用户 userId:{}已有其他终端登录",this.userId);
             // 将新的连接实例sessionid，添加入已有的用户Set中
-            userWebSocketMap.get(this.userId).add(this);
+            ONLINE_SESSIONS_TOWS3_MAP.get(this.userId).add(this);
         }
-        logger.debug("用户{}登录的终端个数是为{}",userId,userWebSocketMap.get(this.userId).size());
-        logger.debug("当前所有在线用户数为：{},所有终端个数为：{}",userWebSocketMap.size(),onlineCount);
+        logger.debug("用户{}登录的终端个数是为{}",userId,ONLINE_SESSIONS_TOWS3_MAP.get(this.userId).size());
+        logger.debug("当前所有在线用户数为：{},所有终端个数为：{}",ONLINE_SESSIONS_TOWS3_MAP.size(),onlineCount);
     }
 
     @OnMessage
@@ -127,15 +128,15 @@ public class TakeawayOrderWebSocket3Server {
         // 在线数减1
         onlineCount--;
         // 如果该用户当前没有连接了/没有在别的终端登录了/所有终端都下线了
-        if (userWebSocketMap.get(this.userId).size() == 0) {
+        if (ONLINE_SESSIONS_TOWS3_MAP.get(this.userId).size() == 0) {
             // 移除Map中该用户的websocket session等记录
-            userWebSocketMap.remove(this.userId);
+            ONLINE_SESSIONS_TOWS3_MAP.remove(this.userId);
         }else{
             // 移除该用户Set中的websocket session等记录
-            userWebSocketMap.get(this.userId).remove(this);
+            ONLINE_SESSIONS_TOWS3_MAP.get(this.userId).remove(this);
         }
-        logger.debug("用户{}登录的终端个数是为{}",this.userId,userWebSocketMap.get(this.userId).size());
-        logger.debug("当前所有在线用户数为：{},所有终端个数为：{}",userWebSocketMap.size(),onlineCount);
+        logger.debug("用户{}登录的终端个数是为{}",this.userId,ONLINE_SESSIONS_TOWS3_MAP.get(this.userId).size());
+        logger.debug("当前所有在线用户数为：{},所有终端个数为：{}",ONLINE_SESSIONS_TOWS3_MAP.size(),onlineCount);
     }
 
     @OnError
@@ -180,9 +181,9 @@ public class TakeawayOrderWebSocket3Server {
      * Date: 2021/3/24 0024 下午 3:35
      */
     public static boolean sendMessageToWebsocketJs(String userId, String message) {
-        if (userWebSocketMap.containsKey(userId)) {
+        if (ONLINE_SESSIONS_TOWS3_MAP.containsKey(userId)) {
             logger.debug(" 给用户 userId为：{}的所有终端发送消息：{}",userId,message);
-            Set<TakeawayOrderWebSocket3Server> userWsSet=userWebSocketMap.get(userId);
+            Set<TakeawayOrderWebSocket3Server> userWsSet=ONLINE_SESSIONS_TOWS3_MAP.get(userId);
             // 给用户的所有终端发送数据消息：遍历该用户的Set中的连接即可
             for (TakeawayOrderWebSocket3Server userWs : userWsSet) {
                 logger.debug("sessionId为:{}",userWs.session.getId());

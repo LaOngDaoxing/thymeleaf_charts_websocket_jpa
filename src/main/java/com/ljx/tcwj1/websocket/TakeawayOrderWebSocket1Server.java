@@ -17,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
         注解@ServerEndpoint 是一个类层次的注解，它的功能主要是将目前的类定义成一个websocket服务器端。注解的值将被用于监听用户连接的终端访问URL地址。
  * @Remark:
  * @CodeBug解决:
+如果期望ById和ByParams页面在新增后展示返回数据不同，可以设置将session的key=userId，改为session的key=groupCode
  * @date 2021年3月24日 下午1:36:00
  * @author  ljx
  *
@@ -26,7 +27,7 @@ public class TakeawayOrderWebSocket1Server {
     /**
      * 存储 websocket session等，以记录每个用户下多个终端【PC（不同浏览器登陆，产生的sessionid不同）、pad、phone】的连接
      */
-    public static final Map<String, List<Session>> ONLINE_USER_SESSIONS = new ConcurrentHashMap<>();
+    public static final Map<String, List<Session>> ONLINE_SESSIONS_TOWS1_MAP = new ConcurrentHashMap<>();
     /*######################## 二、根据用户id，发送 消息(用户信息)的 websocket服务器端 工具方法########################*/
     /**
      * @Author Zhouxw
@@ -57,7 +58,7 @@ public class TakeawayOrderWebSocket1Server {
      * @return: void
       */
     public static void sendMessageToWebsocketJs(String key, String message) {
-        List<Session> list = ONLINE_USER_SESSIONS.get(key);
+        List<Session> list = ONLINE_SESSIONS_TOWS1_MAP.get(key);
         // 给用户的所有终端发送数据消息
         list.stream().forEach(se -> {
             if(se.isOpen()){

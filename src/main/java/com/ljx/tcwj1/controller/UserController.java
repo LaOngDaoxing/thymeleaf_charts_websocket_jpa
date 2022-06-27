@@ -120,7 +120,7 @@ public class UserController {
     public void openSession(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, Session session) {
         // ##-------- 从session中，获取请求路径中携带的信息
         SessionUtil.gainUrlParamFromSession(session);
-        List<Session> list = TakeawayOrderWebSocket1Server.ONLINE_USER_SESSIONS.get(userId);
+        List<Session> list = TakeawayOrderWebSocket1Server.ONLINE_SESSIONS_TOWS1_MAP.get(userId);
         // 如果该用户当前是第一次连接/没有在别的终端登录
         if (null == list) {
             list = new ArrayList<>();
@@ -129,7 +129,7 @@ public class UserController {
         if (!list.contains(session)) {
             list.add(session);
         }
-        TakeawayOrderWebSocket1Server.ONLINE_USER_SESSIONS.put(userId, list);
+        TakeawayOrderWebSocket1Server.ONLINE_SESSIONS_TOWS1_MAP.put(userId, list);
     }
 
     /**
@@ -173,7 +173,7 @@ public class UserController {
     public void onClose(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, Session session) {
         // ##-------- 从session中，获取请求路径中携带的信息
         SessionUtil.gainUrlParamFromSession(session);
-        List<Session> list = TakeawayOrderWebSocket1Server.ONLINE_USER_SESSIONS.get(userId);
+        List<Session> list = TakeawayOrderWebSocket1Server.ONLINE_SESSIONS_TOWS1_MAP.get(userId);
         // 移除该用户的websocket session记录
         list.remove(session);
         try {
