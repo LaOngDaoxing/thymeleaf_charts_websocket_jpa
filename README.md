@@ -17,10 +17,12 @@ websocket+线程轮询：后台使用线程定时查询数据库变动数据，�
 ### （3）配置文件application.properties
 * spring.datasource.url=修改数据库信息，ip、数据库名；
 * server.port=IDEA启动项目/浏览器访问项目地址中的端口号8090
+### （4）配置文件application-dev.properties
+* server.servlet.context-path=/启动项目名称
 ## 3、启动
 &emsp;SpringBoot项目的主配置文件ChartApplication.java》点击按钮Debug
 ## 4、启动后浏览器默认访问地址
-&emsp;http://localhost:8090
+&emsp;http://localhost:8090/thymeleaf_charts_websocket_jpa/
 ## 5、注意
 &emsp;SpringBoot项目在启动后，首先会去静态资源路径（resources/static/）下查找 index.html 作为首页文件。
 <br/>&emsp;如果在静态资源路径（resources/static/）下找不到 index.html，则会到（resources/templates/）目录下找 index.html（使用 Thymeleaf 模版）作为首页文件。
