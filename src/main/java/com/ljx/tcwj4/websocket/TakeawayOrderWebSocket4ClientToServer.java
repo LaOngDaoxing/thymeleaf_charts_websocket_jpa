@@ -27,7 +27,7 @@ public class TakeawayOrderWebSocket4ClientToServer {
     /**
      * websocket服务端地址
      */
-    private static String uri = "ws://192.168.21.21:8090/websocket-chart/userws/"+"dkh";
+    private static String uri = "ws://192.168.21.21:8090/thymeleaf_charts_websocket_jpa/takeawayOrderWs4/firstModule/54fdea80-f6a5-11eb-9810-f44d300627e6";
     private static Session session;
     public static  void main(String[] args) {
         // websocket客户端，发送消息到websocket服务端

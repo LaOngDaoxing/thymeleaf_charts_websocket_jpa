@@ -3,6 +3,7 @@ package com.ljx.tcwj4.websocket;
 import com.alibaba.fastjson.JSON;
 import com.ljx.tcwj1.pojo.dto.UserChartDTO;
 import com.ljx.tcwjneln._09util.constantutil.ConstantUtil;
+import com.ljx.tcwjneln._09util.sessionutil.SessionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,9 +23,10 @@ import java.util.concurrent.ConcurrentHashMap;
 * @FR功能需求：
 * @ImportJar:
 * @ApiGrammer规则：
-    注解@ServerEndpoint 是一个类层次的注解，它的功能主要是将目前的类定义成一个websocket服务端。注解的值将被用于监听用户连接的终端访问URL地址。
+        注解@ServerEndpoint 是一个类层次的注解，它的功能主要是将目前的类定义成一个websocket服务端。注解的值将被用于监听用户连接的终端访问URL地址。
 * @Remark:
 * @CodeBug解决:
+        如果期望ById和ByParams页面在新增后展示返回数据不同，可以设置将session的key=userId，改为session的key=groupCode
 * @date 2021年3月24日 下午1:36:00
 * @author  ljx
 *
@@ -45,13 +47,8 @@ public class TakeawayOrderWebSocket4Server {
      */
     @OnOpen
     public void openSession(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, Session session) {
-        // ##-------- 获取请求路径中携带的信息
-        // {userId=dkh}
-        Map<String, String> map = session.getPathParameters();
-        // emailWsParam=1
-        String str = session.getQueryString();
-        // /userws/dkh?emailWsParam=1
-        String uri = session.getRequestURI().toString();
+        // ##-------- 从session中，获取请求路径中携带的信息
+        SessionUtil.gainUrlParamFromSession(session);
         List<Session> list = ONLINE_SESSIONS_TOWS4_MAP.get(userId);
         // 如果该用户当前是第一次连接/没有在别的终端登录
         if (null == list) {
