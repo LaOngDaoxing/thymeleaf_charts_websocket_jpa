@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author  ljx
  *
  */
-@ServerEndpoint("/userws/{userId}")
+@ServerEndpoint("/takeawayOrderWs3/{groupCode}/{userId}")
 @Component
 public class TakeawayOrderWebSocket3Server {
 
