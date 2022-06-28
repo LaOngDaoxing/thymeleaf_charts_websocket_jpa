@@ -60,9 +60,17 @@ public class TakeawayOrderWebSocket4Server {
         }
         ONLINE_SESSIONS_TOWS4_MAP.put(userId, list);
     }
-
+    /**
+     * 接收客户端发送的消息，并向客户端发送消息
+     * @param groupCode dkh
+     * @param userId    54fdea80-f6a5-11eb-9810-f44d300627e6
+     * @param message   websocketJs_{"provinceMsg":"河北省","cityMsg":"石家庄市","emailMsg":1}
+     * @param session
+     */
     @OnMessage
-    public void onMessage(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, String message) {
+    public void onMessage(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, String message, Session session) {
+        // ##-------- 从session中，获取请求路径中携带的信息
+        SessionUtil.gainUrlParamFromSession(session);
         // 前台用户终端【浏览器】页面，ws.send发送的消息（或心跳信息）
         if(message.startsWith(ConstantUtil.TO_WEBSOCKET_OF_CLIENT_TYPE1)){
             System.out.println(userId + "前台用户终端【浏览器】页面，ws.send发送的消息（或心跳信息）：" + message);
@@ -82,9 +90,16 @@ public class TakeawayOrderWebSocket4Server {
             sendMessageToWebsocketJs(userId, JSON.toJSONString(userChartDTO));
         }
     }
-
+    /**
+     *
+     * @param groupCode dkh
+     * @param userId    54fdea80-f6a5-11eb-9810-f44d300627e6
+     * @param session
+     */
     @OnClose
     public void onClose(@PathParam("groupCode") String groupCode,@PathParam("userId") String userId, Session session) {
+        // ##-------- 从session中，获取请求路径中携带的信息
+        SessionUtil.gainUrlParamFromSession(session);
         List<Session> list = ONLINE_SESSIONS_TOWS4_MAP.get(userId);
         // 移除该用户的websocket session记录
         list.remove(session);

@@ -24,7 +24,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/
         </div>
     </div>
     <p>四、图表数据展示页面（4种展示：前台代码一样；后台websocket实现方式略有不同）</p>
-    <p>1、wsc1展示</p>
+    <p>1、wsc1展示（1和2的区别：1将 @OnOpen、@OnMessage、@OnClose，写在了Controller层；2将 @OnOpen、@OnMessage、@OnClose，写在了TakeawayOrderWebSocket2Server.java）</p>
     <div>
         <a href="http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex" target="_blank">图表（根据用户id，列表查询用户表）</a><br>
         <a href="http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdAndParamsIndex" target="_blank">图表（根据用户id、前台页面条件，列表查询用户表）</a>
@@ -39,7 +39,7 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/
         <a href="http://localhost:8090/thymeleaf_charts_websocket_jpa/index3/toQueryByUserIdIndex" target="_blank">图表（根据用户id，列表查询用户表）</a><br>
         <a href="http://localhost:8090/thymeleaf_charts_websocket_jpa/index3/toQueryByUserIdAndParamsIndex" target="_blank">图表（根据用户id、前台页面条件，列表查询用户表）</a>
     </div>
-    <p>4、wsc4展示</p>
+    <p>4、wsc4展示（4和2的区别：4比2多了TakeawayOrderWebSocket4Client.java、TakeawayOrderWebSocket4ClientToServer.java）</p>
     <div>
         <a href="http://localhost:8090/thymeleaf_charts_websocket_jpa/index4/toQueryByUserIdIndex" target="_blank">图表（根据用户id，列表查询用户表）</a><br>
         <a href="http://localhost:8090/thymeleaf_charts_websocket_jpa/index4/toQueryByUserIdAndParamsIndex" target="_blank">图表（根据用户id、前台页面条件，列表查询用户表）</a>
