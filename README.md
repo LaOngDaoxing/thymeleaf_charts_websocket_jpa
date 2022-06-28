@@ -31,6 +31,9 @@ websocket+线程轮询：后台使用线程定时查询数据库变动数据，�
     <tr>
         <td><img src="https://raw.githubusercontent.com/LaOngDaoxing/thymeleaf_charts_websocket_jpa/main/src/main/resources/static/images/indexPic.png"/></td>
     </tr>
+    <tr>
+        <td><img src="https://raw.githubusercontent.com/LaOngDaoxing/thymeleaf_charts_websocket_jpa/main/src/main/resources/static/images/indexRemarkPic.png"/></td>
+    </tr>
 </table>
 
 # 三、项目部署linux服务器
