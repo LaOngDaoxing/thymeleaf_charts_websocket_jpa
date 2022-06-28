@@ -29,14 +29,15 @@ websocket+线程轮询：后台使用线程定时查询数据库变动数据，�
 ## 6、演示图
 <table>
     <tr>
-        <td><img src="![首页](static/images/indexPic.png)"/></td>
+        <td><img src="https://raw.githubusercontent.com/LaOngDaoxing/thymeleaf_charts_websocket_jpa/main/src/main/resources/static/images/indexPic01.jpg"/></td>
         <td><img src="https://github.com/LaOngDaoxing/thymeleaf_charts_websocket_jpa/blob/main/src/main/resources/static/images/indexPic.png"/></td>
     </tr>
     <tr>
-        <td><img src="https://github.com/LaOngDaoxing/thymeleaf_charts_websocket_jpa/images/indexPic.png"/></td>
+        <td><img src="https://raw.githubusercontent.com/LaOngDaoxing/thymeleaf_charts_websocket_jpa/main/src/main/resources/static/images/indexPic.png"/></td>
         <td><img src="https://github.com/LaOngDaoxing/thymeleaf_charts_websocket_jpa/blob/main/src/main/resources/static/images/indexPic.png"/></td>
     </tr>
 </table>
+![首页](https://raw.githubusercontent.com/LaOngDaoxing/thymeleaf_charts_websocket_jpa/main/src/main/resources/static/images/indexPic.png)
 ![示例图](https://github.com/LaOngDaoxing/thymeleaf_charts_websocket_jpa/blob/main/src/main/resources/static/images/indexPic.png)
 # 三、项目部署linux服务器
 ## 1、项目打包
