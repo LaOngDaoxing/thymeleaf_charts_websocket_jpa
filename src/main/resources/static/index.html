@@ -12,16 +12,18 @@ http://localhost:8090/thymeleaf_charts_websocket_jpa/
     <a href="http://www.ruanyifeng.com/blog/2017/05/websocket.html" target="_blank">WebSocket 教程</a>
     <p>二、后台代码 参考链接</p>
     <a href="https://www.jianshu.com/p/3398d0230e5f" target="_blank">Sring MVC 模式下使用websocket</a>
-    <p>三、登录页面（<span style="color: red">注意必须先登录</span>）</p>
-    <div>
+    <div style="display: none;">
+        <p>三、登录页面（<span style="color: red">注意必须先登录</span>）</p>
+        <div>
         <textarea cols="70" rows="3" readonly="readonly">
             数据库用户表默认存储了三个可用的登录账户：admin、ljx、lzy
             默认登录密码都是：123456
         </textarea>
-        <br>
-        <a href="http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toLogin" target="_blank">跳转登录页面</a><br>
+            <br>
+            <a href="http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toLogin" target="_blank">跳转登录页面</a><br>
+        </div>
     </div>
-    <p>四、图表数据展示页面</p>
+    <p>四、图表数据展示页面（4种展示：前台代码一样；后台websocket实现方式略有不同）</p>
     <p>1、wsc1展示</p>
     <div>
         <a href="http://localhost:8090/thymeleaf_charts_websocket_jpa/index1/toQueryByUserIdIndex" target="_blank">图表（根据用户id，列表查询用户表）</a><br>
